@@ -50,8 +50,8 @@ iupick.shipment.create({length: 8, width: 8, height: 8, weight: 1.1},
 
         iupick.shipment.generateWaybill(
           confirmationToken,
-          function(waybill_link) {
-            waybill_link // the created waybill link
+          function(waybill) {
+            waybill; // the created waybill link, tracking information and carrier
           });
       });
   });

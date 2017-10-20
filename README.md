@@ -1,4 +1,4 @@
-# iupick.js
+# iupick-node
 
 The iupick Node library wraps the iupick API to facilitate access from applications written in server-side JavaScript.
 
@@ -110,8 +110,8 @@ Generate your waybill with your confirmation token.
 ``` js
 iupick.shipment.generateWaybill(
     confirmationToken,
-    function(waybill_link) {
-    waybill_link // the created waybill link
+    function(waybill) {
+    waybill // the created waybill link, tracking number and carrier
     });
 
 ```
