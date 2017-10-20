@@ -93,8 +93,9 @@ var Shipment = {
     var url = iupick.getBaseUrl() + 'track-shipment/';
     var payload = {
       'carrier': args.carrier,
-      'tracking_number': String(args.trackingNumber)
+      'tracking_number': parseInt(args.trackingNumber)
     };
+    console.log(payload.tracking_number);
     var headers = {'Authorization': 'Token ' + iupick.publicToken };
 
     iupick.requests.get({url: url, headers: headers, qs: payload},
@@ -102,10 +103,8 @@ var Shipment = {
         if (err) {
           throw new Error(err);
         }
-        var decodedResponse = JSON.parse(response.body);
-        callback(decodedResponse);
+        callback(response.body);
       });
   },
 }
-
 module.exports = Shipment;

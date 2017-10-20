@@ -6,7 +6,6 @@ const environment = 'sandbox'
 
 iupick = new Iupick(secretToken, publicToken, environment);
 
-
 var shipperAddress = iupick.createAddress(
   city = 'Querétaro',
   lineOne = 'Epigmenio Gonzáles 500',
@@ -55,4 +54,9 @@ iupick.shipment.create({length: 8, width: 8, height: 8, weight: 1.1},
             waybill_link // the created waybill link
           });
       });
+  });
+
+iupick.shipment.track({carrier: 'Estafeta', trackingNumber: '8055241528464720099314'},
+  function(status){
+    status; // the tracking status
   });
