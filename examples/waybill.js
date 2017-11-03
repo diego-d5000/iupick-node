@@ -60,3 +60,8 @@ iupick.shipment.track({carrier: 'Estafeta', trackingNumber: '8055241528464720099
   function(status){
     status; // the tracking status
   });
+
+iupick.shipment.confirmShipmentWaypoint({waypoint: 486, orderId: "ORDER666"},
+  function(confirmation){
+    confirmation; // A confirmation token
+  });

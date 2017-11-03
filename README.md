@@ -30,19 +30,67 @@ iupick = new Iupick(secretToken, publicToken, environment);
 The iupick Node library has multiple resources with methods that call the API
 and return a callback.
 
-## Waybills
+Methods require either your Public or your Secret token, never expose your
+secret token.
 
-The waybill generation occurs on three steps.
+Methods that require your secret_token should never be done from the front-end. Since this methods deal with sensitive information.
 
-Never expose your secret token.
+## Waypoints
 
-Methods that require your secret_token should never be done from the front-end. Since this methods deal with sensitive information. 
+The Waypoints resource allows you to interact with all the delivery points from
+our network that are available to your account.
 
-The Waybills resource allows you to create and track shipments.
+To pull the full information for a single waypoint. Use `getWaypointInformation`
+It requires the waypoint unique id.
+
+``` js
+iupick.waypoint.getWaypointInformation(20, function(waypoint) {
+    waypoint; // information of the waypoint
+    });
+```
+
+To get a list of all the coordinates of available waypoints, use
+`getWaypointsLite`.
+
+``` js
+iupick.waypoint.getWaypointsLite(function(waypoints) {
+    waypoints; // list of waypoints
+    });
+```
+
+You can get all the waypoints close to a Postal Code with
+`getPostalCodeWaypoints`.
+
+``` js
+iupick.waypoint.getPostalCodeWaypoints(95710, function(waypoints) {
+    waypoints; // list of waypoints by CP
+    });
+```
+
+## External Shipments
+
+If you want to generate a shipment to one of iupick delivery points, but not through our Waybill API, you will need to create a confirmation token so our points are able to receive your
+package.
+
+``` js
+iupick.shipment.confirmShipmentWaypoint({waypoint: 486, orderId: "ORDER666"},
+    function(confirmation){
+    conformation; // A confirmation token
+    });
+```
+
+The waypoint argument receives the id of the point you want to ship to, the orderId is your own generated order id.
+
+
+## Shipments with iupick
+
+The iupick API allows the generation of waybills and tracking with our available carriers.
+
+The waybill generation occurs on three steps:
 
 ### Step 1
 
-Create a shipment on the iuPick platform and receive a
+Create a shipment on the iupick platform and receive a
 shipment token.
 
 ``` js
@@ -54,8 +102,7 @@ iupick.shipment.create({length: 8, width: 8, height: 8, weight: 1.1},
 
 ### Step 2
 
-Fill the rest of the information required to generate a waybill,
-and receive a confirmation token.
+Fill the rest of the information required to generate a waybill, and receive a confirmation token.
 
 You can send a shipment either to an arbitrary direction or to one
 of our waypoints; just replace the waypoint_id attribute for a recipient
@@ -63,31 +110,33 @@ address.
 
 ``` js
 var shipperAddress = iupick.createAddress(
-  city = 'Querétaro',
-  lineOne = 'Epigmenio Gonzáles 500',
-  postalCode = 76130,
-  lineTwo = '',
-  neighborhood = 'Momma'
-);
+    city = 'Querétaro',
+    lineOne = 'Epigmenio Gonzáles 500',
+    postalCode = 76130,
+    lineTwo = '',
+    neighborhood = 'Momma'
+    );
 
 var shipperContact = iupick.createPerson(
-  personName = 'Tony Stark',
-  phoneNumber = '555555555',
-  emailAddress = 'tony@fakemail.com',
-  title = 'CEO',
-  companyName = 'Stark Industries',
-  phoneExtension = '123'
-)
+    personName = 'Tony Stark',
+    phoneNumber = '555555555',
+    emailAddress = 'tony@fakemail.com',
+    title = 'CEO',
+    companyName = 'Stark Industries',
+    phoneExtension = '123'
+    )
 
 var recipientContact = iupick.createPerson(
-  personName='Steve Rogers',
-  phoneNumber='555555555',
-  emailAddress='steve@fakemail.com',
-  title='Agent',
-  companyName='SHIELD',
-  phoneExtension='123'
-)
+    personName='Steve Rogers',
+    phoneNumber='555555555',
+    emailAddress='steve@fakemail.com',
+    title='Agent',
+    companyName='SHIELD',
+    phoneExtension='123'
+    )
 ```
+
+You can use our helper methods to create the required objects.
 
 ```js
 iupick.shipment.addInformation({
@@ -126,37 +175,4 @@ iupick.shipment.track({carrier: 'Estafeta', trackingNumber: '8055241528464720099
     status; // the tracking status
     });
 ```
-
-## Waypoints
-
-The Waypoints resource allows you to interact with all the delivery points from
-our network that are available to your account.
-
-To pull the full information for a single waypoint. Use `getWaypointInformation`
-It requires the waypoint unique id.
-
-``` js
-iupick.waypoint.getWaypointInformation(20, function(waypoint) {
-    waypoint; // information of the waypoint
-    });
-```
-
-To get a list of all the coordinates of available waypoints, use
-`getWaypointsLite`.
-
-``` js
-iupick.waypoint.getWaypointsLite(function(waypoints) {
-    waypoints; // list of waypoints
-    });
-```
-
-You can get all the waypoints close to a Postal Code with
-`getPostalCodeWaypoints`.
-
-``` js
-iupick.waypoint.getPostalCodeWaypoints(95710, function(waypoints) {
-    waypoints; // list of waypoints by CP
-    });
-```
-
 
