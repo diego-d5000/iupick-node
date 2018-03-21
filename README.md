@@ -151,28 +151,3 @@ confirmationToken; // the created confirmation token
 });
 
 ```
-
-### Step 3.
-
-Generate your waybill with your confirmation token.
-
-``` js
-iupick.shipment.generateWaybill(
-    confirmationToken,
-    function(waybill) {
-    waybill // the created waybill link, tracking number and carrier
-    });
-
-```
-
-### Tracking your shipment
-
-In order to track a shipment send the carrier and the tracking number.
-
-``` js
-iupick.shipment.track({carrier: 'Estafeta', trackingNumber: '8055241528464720099314'},
-    function(status){
-    status; // the tracking status
-    });
-```
-
