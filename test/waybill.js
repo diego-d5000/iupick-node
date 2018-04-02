@@ -19,7 +19,7 @@ describe('Waybill', function () {
       const shipperAddress = iupickClient.createAddress(
         city = 'Querétaro',
         lineOne = 'Epigmenio Gonzáles 500',
-        postalCode = [76130],
+        postalCode = 76130,
         lineTwo = '',
         neighborhood = 'Momma'
       );
