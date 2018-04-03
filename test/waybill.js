@@ -19,7 +19,14 @@ describe('Waybill', function () {
       const shipperAddress = iupickClient.createAddress(
         city = 'Querétaro',
         lineOne = 'Epigmenio Gonzáles 500',
-        postalCode = 76130,
+        postalCode = {
+          state:
+            {
+              name: "Querétaro",
+              code: "QT"
+            },
+          code: "05200",
+        },
         lineTwo = '',
         neighborhood = 'Momma'
       );
@@ -67,8 +74,11 @@ describe('Waybill', function () {
                 confirmationToken,
                 function (waybill) {
                   assert.exists(waybill);
-                  assert.typeOf(confirmation, 'string')
+                  assert.typeOf(waybill, 'object')
 
+                  assert.typeOf(waybill.carrier, 'string')
+                  assert.typeOf(waybill['tracking_number'], 'string')
+                  assert.typeOf(waybill['waybill_link'], 'string')
                   done();
                 });
             });
@@ -78,7 +88,6 @@ describe('Waybill', function () {
 
   describe('track', function () {
     it('return a tracking code status', function (done) {
-      this.timeout(15000);
       iupickClient.shipment.track({ carrier: 'Estafeta', trackingNumber: '8055241528464720099314' },
         function (status) {
           assert.exists(status);
