@@ -4,7 +4,7 @@
   "description": "iupick API wrapper",
   "main": "lib/iupick.js",
   "scripts": {
-    "test": "mocha"
+    "test": "mocha --timeout 15000"
   },
   "repository": {
     "type": "git",
