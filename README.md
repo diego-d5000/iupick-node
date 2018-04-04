@@ -112,7 +112,14 @@ address.
 var shipperAddress = iupick.createAddress(
     city = 'Querétaro',
     lineOne = 'Epigmenio Gonzáles 500',
-    postalCode = 76130,
+    postalCode = {
+        state:
+        {
+            name: "Querétaro",
+            code: "QT"
+        },
+        code: "05200",
+    },
     lineTwo = '',
     neighborhood = 'Momma'
     );
